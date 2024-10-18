@@ -44,13 +44,19 @@ function playGame() {
 
         let i1 = prompt("donner i1");
         let j1 = prompt("donner j1");
-        let i2 = prompt("donner i2");
-        let j2 = prompt("donner j2");
+       
+
+            let i2 = prompt("donner i2");
+           let j2 = prompt("donner j2");
+
+        
 
 
         playRound(player1, player2, i1, j1, i2, j2);
 
-    } while (player1.win != 1 && player2.win != 1 && i++ < 3)
+
+
+    } while (player1.win != 1 && player2.win != 1 && i++ < 5)
 
     if (player1.win === 1) {
 
@@ -73,18 +79,18 @@ function playRound(player1, player2, i1, j1, i2, j2) {
 
 
 
-    const { getcptcolunm: getcptcolunm1, getcptrow: getcptrow1, o: geto1 } = verifyPlayer(player1, i1, j1);
-
+    const { getcptcolunm: getcptcolunm1, getcptrow: getcptrow1 ,o:geto1} = verifyPlayer(player1, i1, j1);
+    const { getcptcolunm: getcptcolunm2, getcptrow: getcptrow2, o:geto2} = verifyPlayer(player2, i2, j2);
 
 
     console.log("player 1");
     console.log(getcptcolunm1);
     console.log(getcptrow1);
+    console.log(geto1);
+    
 
 
-
-
-    if (getcptcolunm1 === 2 || getcptrow1 === 2 || geto1 === 2 || geto1 === 3) {
+    if (getcptcolunm1 === 2 || getcptrow1 === 2 || geto1===2 ||geto1===3) {
 
 
 
@@ -93,35 +99,35 @@ function playRound(player1, player2, i1, j1, i2, j2) {
 
     } else {
 
+        
+        
 
-        const { getcptcolunm: getcptcolunm2, getcptrow: getcptrow2, o: geto2 } = verifyPlayer(player2, i2, j2);
-
-
-
-
-        console.log("player 2");
-        console.log(getcptcolunm2);
-        console.log(getcptrow2);
-
-        if (getcptcolunm2 === 2 || getcptrow2 === 2 || geto2 === 2 || geto2 === 3) {
+        if (getcptcolunm2 === 2 || getcptrow2 === 2||geto2===2 ||geto2===3) {
 
             player2.win++;
 
-
+           
 
 
         } else {
 
             player1.addPlay(i1, j1);
+
             player2.addPlay(i2, j2);
-
-
         }
+
+
+         console.log("player 2");
+         console.log(getcptcolunm2);
+         console.log(getcptrow2);
+         console.log(geto2);
+
+       
 
     }
 
 
-
+   
 
 }
 
@@ -130,20 +136,21 @@ function verifyPlayer(playern, i, j) {
 
 
     let getcptcolunm = 0,
-        getcptrow = 0, o = 0;
+        getcptrow = 0, o=0;
 
     if (playern.playerArray.length != 0) {
 
 
         for (let k = 0; k < playern.playerArray.length; k++) {
 
-            if ((i === j) && (playern.playerArray[k].i === playern.playerArray[k].j)) {
+            if ( (i===j )&& (playern.playerArray[k].i === playern.playerArray[k].j)){
 
                 o++;
 
             }
 
-            if ((i + j === 4) && (playern.playerArray[k].i + playern.playerArray[k].j === 4)) {
+            if((i+j===4) && (playern.playerArray[k].i+ playern.playerArray[k].j===4) )
+            {
                 o++;
             }
 
@@ -164,7 +171,7 @@ function verifyPlayer(playern, i, j) {
 
     }
 
-    return { getcptcolunm, getcptrow, o };
+    return { getcptcolunm, getcptrow,o };
 
 
 }
