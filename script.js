@@ -28,20 +28,7 @@ function round(i, j) {
     return {
 
         i,
-        j,
-        geto : ()=>{
-            let o;
-            if(this.i===this.j ){
-                o=1;
-
-            }else{
-                if(this.i ===1 &&this.j===3 || this.i===3 && this.j===1 ){
-
-                    o= -1;
-                }
-            }
-            return o;
-        }
+        j
     };
 }
 
@@ -59,7 +46,7 @@ function playGame() {
         let j1 = prompt("donner j1");
         let i2 = prompt("donner i2");
         let j2 = prompt("donner j2");
-        
+
 
         playRound(player1, player2, i1, j1, i2, j2);
 
@@ -86,12 +73,18 @@ function playRound(player1, player2, i1, j1, i2, j2) {
 
 
 
-    const { getcptcolunm: getcptcolunm1, getcptrow: getcptrow1, getcpto:getcpto1 } = verifyPlayer(player1, i1, j1);
+    const { getcptcolunm: getcptcolunm1, getcptrow: getcptrow1, o: geto1 } = verifyPlayer(player1, i1, j1);
+
+
+
+    console.log("player 1");
+    console.log(getcptcolunm1);
+    console.log(getcptrow1);
 
 
 
 
-    if (getcptcolunm1 === 2 || getcptrow1 === 2||getcpto1==3 || getcpto1 ===7) {
+    if (getcptcolunm1 === 2 || getcptrow1 === 2 || geto1 === 2 || geto1 === 3) {
 
 
 
@@ -100,34 +93,35 @@ function playRound(player1, player2, i1, j1, i2, j2) {
 
     } else {
 
-        const { getcptcolunm: getcptcolunm2, getcptrow: getcptrow2,getcpto:getcpto2 } = verifyPlayer(player2, i2, j2);
+
+        const { getcptcolunm: getcptcolunm2, getcptrow: getcptrow2, o: geto2 } = verifyPlayer(player2, i2, j2);
 
 
 
-        if (getcptcolunm2 === 2 || getcptrow2 === 2 ||getcpto2==3 || getcpto2===7) {
-
-            player2.win++;
-
-
-        } else  {
-           
-            player1.addPlay(i1, j1);
-
-            player2.addPlay(i2, j2);
-        }
 
         console.log("player 2");
         console.log(getcptcolunm2);
         console.log(getcptrow2);
-        console.log(getcpto2);
+
+        if (getcptcolunm2 === 2 || getcptrow2 === 2 || geto2 === 2 || geto2 === 3) {
+
+            player2.win++;
+
+
+
+
+        } else {
+
+            player1.addPlay(i1, j1);
+            player2.addPlay(i2, j2);
+
+
+        }
 
     }
 
-    console.log("player 1");
-    console.log(getcptcolunm1);
-    console.log(getcptrow1);
-    console.log(getcpto1);
-   
+
+
 
 }
 
@@ -136,41 +130,33 @@ function verifyPlayer(playern, i, j) {
 
 
     let getcptcolunm = 0,
-        getcptrow = 0,
-        getcpto=0;
+        getcptrow = 0, o = 0;
 
     if (playern.playerArray.length != 0) {
 
 
         for (let k = 0; k < playern.playerArray.length; k++) {
 
+            if ((i === j) && (playern.playerArray[k].i === playern.playerArray[k].j)) {
 
+                o++;
 
+            }
 
+            if ((i + j === 4) && (playern.playerArray[k].i + playern.playerArray[k].j === 4)) {
+                o++;
+            }
 
             if (i === playern.playerArray[k].i) {
 
                 getcptcolunm++;
 
             } else {
+
                 if (j === playern.playerArray[k].j) {
 
                     getcptrow++;
 
-                }else {
-
-                    if(playern.playerArray[k].geto()===1){
-
-                        getcpto++;
-
-                    }else{
-
-                        if(playern.playerArray[k].geto()===-1){
-
-                            getcpto = getcpto+3;
-                        }
-
-                    }
                 }
             }
 
@@ -178,7 +164,7 @@ function verifyPlayer(playern, i, j) {
 
     }
 
-    return { getcptcolunm, getcptrow,getcpto };
+    return { getcptcolunm, getcptrow, o };
 
 
 }
